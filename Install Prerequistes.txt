@@ -1,0 +1,70 @@
+# * Enable IIS webrole
+Set-ExecutionPolicy Bypass -Scope Process
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-CommonHttpFeatures
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-Security
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-RequestFiltering
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-StaticContent
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-DefaultDocument
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-DirectoryBrowsing
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpErrors
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpRedirect
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebDAV
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationDevelopment
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebSockets
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationInit
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ISAPIExtensions
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ISAPIFilter
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-URLAuthorization
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionDynamic
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ServerSideIncludes
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HealthAndDiagnostics
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpLogging
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-BasicAuthentication
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-WindowsAuthentication
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-Performance
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerManagementTools
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-HostableWebCore
+Enable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45 -All
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility
+Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility45
+
+# Chocolatey install script
+#Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install all the packages
+# -y confirm yes for any prompt during the install process ?
+choco install webdeploy -y
+choco install urlrewrite -y
+choco install jre8 --version 8.0.181 -y
+choco install javaruntime --version 8.0.181 -y
+[Environment]::SetEnvironmentVariable("JAVA_HOME", "C:\Program Files\Java\jre1.8.0_181", "Machine")
+choco install netfx-4.7.1-devpack
+choco install dotnetcore -y
+choco install vcredist2015
+
+##Dev-Only
+choco install nodejs.install -y
+choco install python2 -y
+choco install googlechrome -y
+choco install git.install -y
+choco install sourcetree -y
+choco install notepadplusplus.install -y
+choco install visualstudiocode -y
+choco install sql-server-management-studio -y
+
+#Manually Install SQL 2017 and Visual Studio 2017 Enterprise
+
+
+#SIF Install
+
+Register-PSRepository -Name SitecoreGallery -SourceLocation https://sitecore.myget.org/F/sc-powershell/api/v2 -InstallationPolicy Trusted
+Install-Module -Name SitecoreFundamentals -Repository SitecoreGallery
+Install-Module -Name SitecoreInstallFramework -Repository SitecoreGallery -RequiredVersion 2.0.0
+Update-Module SitecoreInstallFramework
+Install-SitecoreConfiguration -Path .\Prerequisites.json
+
+

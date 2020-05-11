@@ -1,0 +1,19 @@
+1. Install Choco
+	Installs the package
+2. Install Prerequisite
+	Enable required features (IIS)
+	Install the required softwares using Choco
+3. Generate Certificates only once and use import script in all servers (Skip for Dev)
+
+SOLR
+
+XP
+
+Modules
+
+sql restore
+
+restore database [Dev_Core] from disk = 'C:\\temp\\SC90_Core.bak';
+restore database [Dev_Master] from disk = 'C:\\temp\\SC90_Master.bak'; (edited) 
+
+Deploy solution and Publish to web
